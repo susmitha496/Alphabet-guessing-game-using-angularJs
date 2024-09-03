@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="AlphabetGuessingGameApp">
+<head>
+    <title>Alphabet Guessing Game</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app3.js"></script>
+    <link rel="stylesheet" href="style3.css">
+</head>
+<body ng-controller="GameController as game">
+
+    <div class="game-container">
+        <h1>Alphabet Guessing Game</h1>
+        <p>Guess the number corresponding to the displayed letter:</p>
+        
+        <!-- User Input for Player Name -->
+        <div ng-show="!game.gameStarted">
+            <form ng-submit="game.startGame()">
+                <input type="text" ng-model="game.playerName" placeholder="Enter your name" required />
+                <button type="submit">Start Game</button>
+            </form>
+        </div>
+
+        <!-- Game Area -->
+        <div ng-show="game.gameStarted">
+            <div class="alphabet-display">
+                <h2>{{ game.currentLetter }}</h2>
+            </div>
+            
+            <input type="number" ng-model="game.userGuess" placeholder="Enter the number" min="1" max="26" />
+            <button ng-click="game.checkGuess()">Submit Guess</button>
+
+            <!-- Try Again Button -->
+            <button ng-show="game.isWrong" class="wrong-button">Wrong!</button>
+
+            <p class="message">{{ game.message }}</p>
+            <p>Score: {{ game.score }}</p>
+
+            <button ng-click="game.resetGame()">Reset Game</button>
+        </div>
+
+        <!-- Leaderboard -->
+        <div class="leaderboard">
+            <h3>Leaderboard</h3>
+            <table>
+                <tr>
+                    <th>Player</th>
+                    <th>Score</th>
+                </tr>
+                <tr ng-repeat="entry in game.leaderboard">
+                    <td>{{ entry.name }}</td>
+                    <td>{{ entry.score }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
